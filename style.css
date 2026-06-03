@@ -60,7 +60,7 @@ body::before{
   pointer-events:none;z-index:0;
 }
 
-.wrap{position:relative;z-index:1;max-width:980px;margin:0 auto;padding:40px 22px 100px;}
+.wrap{position:relative;z-index:1;margin:0 auto;padding:40px 22px 100px;}
 
 /* ─── HEADER ──────────────────────────────────────────── */
 .hdr{
