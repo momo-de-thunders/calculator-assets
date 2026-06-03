@@ -207,12 +207,10 @@ function renderDetailedReport(d){
 }
 
 function unlock(){
-  const e=g('oi-e').value.trim();
-  if(!e||!e.includes('@')){g('oi-e').style.borderColor='rgba(0,91,240,.5)';g('oi-e').focus();return;}
   const d=cAll();
   reportUnlocked=true;
-  // Hide opt-in, stop animation
-  g('oi-e').closest('.opi').style.display='none';
+  // Hide opt-in container, render & reveal detailed report
+  document.querySelector('.opi').style.display='none';
   renderDetailedReport(d);
   g('rpt').style.display='block';
   setTimeout(()=>g('rpt').scrollIntoView({behavior:'smooth',block:'start'}),60);
@@ -286,3 +284,53 @@ document.addEventListener('click',e=>{
 });
 
 live();
+
+
+// ── HubSpot form (report gate) ──
+function initHubSpotForm(){
+  if(typeof hbspt !== 'undefined' && hbspt.forms){
+    hbspt.forms.create({
+      portalId: "145896847",
+      formId: "12fa87e1-e4ab-4e4f-86c3-90400e6bf423",
+      region: "eu1",
+      target: "#hbspt-form-target",
+      locale: "en",
+      translations: {
+        en: {
+          submitText: "Unlock the report →"
+        }
+      },
+      onFormReady: function(){
+        const f = document.querySelector('#hbspt-form-target form');
+        if(!f) return;
+        const email = f.querySelector('input[type="email"]');
+        if(email) email.placeholder = "Your professional email";
+        if(email){
+          const field = email.closest('.hs-form-field');
+          if(field){
+            const label = field.querySelector('label');
+            if(label){
+              const req = label.querySelector('.hs-form-required');
+              const span = label.querySelector('span:not(.hs-form-required)');
+              if(span){ span.textContent = "Your professional email"; }
+              else {
+                label.textContent = "Your professional email";
+                if(req) label.appendChild(req);
+              }
+            }
+          }
+        }
+      },
+      onFormSubmitted: function(){
+        unlock();
+      }
+    });
+  } else {
+    setTimeout(initHubSpotForm, 100);
+  }
+}
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', initHubSpotForm);
+} else {
+  initHubSpotForm();
+}
