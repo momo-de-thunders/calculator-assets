@@ -302,22 +302,21 @@ function initHubSpotForm(){
       },
       onFormReady: function(){
         const PH = "Votre email professionnel";
+        const form = document.querySelector('#hbspt-form-target form');
+        if(!form) return;
+        const email = form.querySelector('input[type="email"]');
+        if(!email) return;
         function apply(){
-          const f = document.querySelector('#hbspt-form-target form');
-          if(!f) return;
-          const email = f.querySelector('input[type="email"]');
-          if(email && email.placeholder !== PH){
+          if(email.placeholder !== PH){
             email.placeholder = PH;
             email.setAttribute('placeholder', PH);
           }
         }
         apply();
-        // HubSpot rewrites field attributes after onFormReady; re-assert briefly.
-        let tries = 0;
-        const iv = setInterval(function(){
-          apply();
-          if(++tries >= 10) clearInterval(iv);
-        }, 100);
+        // Watch HubSpot's later resets to the placeholder attribute and re-assert.
+        const obs = new MutationObserver(apply);
+        obs.observe(email, { attributes: true, attributeFilter: ['placeholder'] });
+        setTimeout(function(){ obs.disconnect(); }, 3000);
       },
       onFormSubmitted: function(){
         unlock();
