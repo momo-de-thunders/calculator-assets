@@ -301,25 +301,23 @@ function initHubSpotForm(){
         }
       },
       onFormReady: function(){
-        const f = document.querySelector('#hbspt-form-target form');
-        if(!f) return;
-        const email = f.querySelector('input[type="email"]');
-        if(email) email.placeholder = "Votre email professionnel";
-        if(email){
-          const field = email.closest('.hs-form-field');
-          if(field){
-            const label = field.querySelector('label');
-            if(label){
-              const req = label.querySelector('.hs-form-required');
-              const span = label.querySelector('span:not(.hs-form-required)');
-              if(span){ span.textContent = "Votre email professionnel"; }
-              else {
-                label.textContent = "Votre email professionnel";
-                if(req) label.appendChild(req);
-              }
-            }
+        const PH = "Votre email professionnel";
+        function apply(){
+          const f = document.querySelector('#hbspt-form-target form');
+          if(!f) return;
+          const email = f.querySelector('input[type="email"]');
+          if(email && email.placeholder !== PH){
+            email.placeholder = PH;
+            email.setAttribute('placeholder', PH);
           }
         }
+        apply();
+        // HubSpot rewrites field attributes after onFormReady; re-assert briefly.
+        let tries = 0;
+        const iv = setInterval(function(){
+          apply();
+          if(++tries >= 10) clearInterval(iv);
+        }, 100);
       },
       onFormSubmitted: function(){
         unlock();

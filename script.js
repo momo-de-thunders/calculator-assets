@@ -300,27 +300,6 @@ function initHubSpotForm(){
           submitText: "Unlock the report →"
         }
       },
-      onFormReady: function(){
-        const f = document.querySelector('#hbspt-form-target form');
-        if(!f) return;
-        const email = f.querySelector('input[type="email"]');
-        if(email) email.placeholder = "Your professional email";
-        if(email){
-          const field = email.closest('.hs-form-field');
-          if(field){
-            const label = field.querySelector('label');
-            if(label){
-              const req = label.querySelector('.hs-form-required');
-              const span = label.querySelector('span:not(.hs-form-required)');
-              if(span){ span.textContent = "Your professional email"; }
-              else {
-                label.textContent = "Your professional email";
-                if(req) label.appendChild(req);
-              }
-            }
-          }
-        }
-      },
       onFormSubmitted: function(){
         unlock();
       }
