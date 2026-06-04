@@ -251,7 +251,7 @@ const CDD_META={
   },
   'cdd-rel':{
     hiddenId:'s-rel',
-    getDisplay:(val)=>`<div class="cdd-label">${val} / month</div>`
+    getDisplay:(val)=>`<div class="cdd-label">${val} per month</div>`
   }
 };
 
