@@ -897,7 +897,7 @@ select{display:none;}
   .ubtn{width:100%!important;}
 
   /* Section labels */
-  .sec-lbl{margin-top:24px;margin-bottom:14px;}
+  .sec-lbl{position:static;margin:0 0 12px;left:auto;top:auto;}
 
   /* Stat blocks */
   .stat-block{margin-bottom:32px;}
