@@ -628,6 +628,9 @@ select{display:none;}
 
 /* ── OPT-IN ── */
 .opi{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   background:#ffffff;
   border:none;
   border-radius:0;
