@@ -834,7 +834,7 @@ select{display:none;}
   .btbl{font-size:11px;min-width:0;}
   .btbl td{padding:6px 8px;}
   .btbl thead td{font-size:13px;}
-  .btbl tbody td:last-child{font-size:13px;}
+  .btbl tbody td:last-child{font-size:12px;}
   .rg3{grid-template-columns:1fr 1fr;}
   .rk2-v{font-size:14px;}
   .opi{padding:24px 12px;}
