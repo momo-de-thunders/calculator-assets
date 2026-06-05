@@ -831,7 +831,7 @@ select{display:none;}
   .t80-ft{flex-direction:column;align-items:flex-start;gap:6px;}
   .t80-gv{font-size:20px;}
   .t80-gt{font-size:11px;}
-  .btbl{font-size:11px;}
+  .btbl{font-size:11px;min-width:0;}
   .btbl td{padding:6px 8px;}
   .btbl thead td{font-size:13px;}
   .btbl tbody td:last-child{font-size:13px;}
