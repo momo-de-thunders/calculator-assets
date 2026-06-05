@@ -672,7 +672,11 @@ select{display:none;}
 .rk2-l{font-size:9px;color:var(--mut2);font-family:var(--mono);text-transform:uppercase;letter-spacing:.3px;margin-bottom:3px;font-weight:600;}
 .rk2-v{font-family:var(--fd);font-size:16px;font-weight:600;}
 
-.btbl{width:100%;border-collapse:collapse;font-size:15px;}
+.btbl-scroll{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.btbl{width:100%;border-collapse:collapse;font-size:15px;min-width:460px;}
 .btbl thead td{
   font-size:13px;color:var(--mut);padding:6px 0;
   font-family:var(--fd);text-transform:uppercase;letter-spacing:.5px;font-weight:600;
