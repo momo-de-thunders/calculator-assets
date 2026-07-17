@@ -128,6 +128,19 @@ body::before{
 @media(max-width:680px){.g2{grid-template-columns:1fr;}}
 .full{grid-column:1/-1;}
 
+/* Left column: Your team + Production incidents stacked */
+.col-left{display:flex;flex-direction:column;gap:16px;}
+
+/* Team row: QA / Developers / Product team side by side */
+.team-row{display:flex;gap:12px;align-items:flex-start;}
+.team-row .fld{flex:1;margin-bottom:0;min-width:0;}
+.team-row .stepper{width:100%;}
+.team-row .stepper-val{flex:1;}
+@media(max-width:560px){
+  .team-row{flex-direction:column;gap:14px;}
+  .team-row .fld{width:100%;}
+}
+
 .card-wrap{
   position:relative;
   padding-top:14px;
