@@ -526,7 +526,7 @@
 
   /* form: page-only in step 1 */
   const MSG = (document.documentElement.lang||'').slice(0,2)==='fr'?{"err": "Certains champs sont à vérifier. Lisez le message sous chacun d’eux.", "req": "Obligatoire", "email": "Saisissez une adresse email valide, par exemple nom@entreprise.com", "consent": "Cochez la case pour vous inscrire"}:{"err": "Some fields need attention. Check the messages under each one.", "req": "Required", "email": "Enter a valid email address, e.g. name@company.com", "consent": "Tick the box to register"};
-  const form = document.getElementById('reg-form'), err = document.getElementById('f-err');
+  const form = document.getElementById('reg-form') || document.createElement('form'), err = document.getElementById('f-err');
   form.addEventListener('submit', e => {
     e.preventDefault();
     let first = null;
@@ -551,4 +551,60 @@
       if (!form.querySelector('.f.bad')) err.textContent = '';
     }
   });
+})();
+
+/* registration: HubSpot v2 form, restyled inside its same-origin iframe */
+(() => {
+  const host = document.getElementById('hbspt-tf27-reg'); if (!host) return;
+  const lang = (document.documentElement.lang || '').slice(0, 2) === 'fr' ? 'fr' : 'en';
+  const T = {"en": {"labels": {"firstname": "First name", "lastname": "Last name", "email": "Work email", "company": "Company", "jobtitle": "Job title", "message": "A question you’d like the speakers to answer (optional)"}, "consent": "I agree that Thunders uses my details to manage my registration and send me information about this event.", "submit": "Register now", "required": "Required", "email": "Enter a valid email address, e.g. name@company.com", "success_h": "You’re registered.", "success_p": "Check your inbox: the confirmation email is on its way.", "recaptcha": "This site is protected by reCAPTCHA and the Google <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a> and <a href=\"https://policies.google.com/terms\" target=\"_blank\" rel=\"noopener\">Terms of Service</a> apply."}, "fr": {"labels": {"firstname": "Prénom", "lastname": "Nom", "email": "Email professionnel", "company": "Entreprise", "jobtitle": "Poste", "message": "Une question à poser aux intervenants (facultatif)"}, "consent": "J’accepte que Thunders utilise mes informations pour gérer mon inscription et m’envoyer des informations sur cet événement.", "submit": "Je m’inscris", "required": "Obligatoire", "email": "Saisissez une adresse email valide, par exemple nom@entreprise.com", "success_h": "Vous êtes inscrit·e.", "success_p": "Consultez votre boîte de réception: l’email de confirmation est en route.", "recaptcha": "Ce site est protégé par reCAPTCHA. Les <a href=\"https://policies.google.com/privacy?hl=fr\" target=\"_blank\" rel=\"noopener\">règles de confidentialité</a> et les <a href=\"https://policies.google.com/terms?hl=fr\" target=\"_blank\" rel=\"noopener\">conditions d’utilisation</a> de Google s’appliquent."}}[lang], CSS = "@font-face{font-family:Geist;font-weight:400;font-display:swap;src:url(https://cdn.prod.website-files.com/68a3440e1b48f58abea46a9b/6abd0d2d59183a0f934b9adb_Geist-400-Regular.woff2) format('woff2')}@font-face{font-family:Geist;font-weight:500;font-display:swap;src:url(https://cdn.prod.website-files.com/68a3440e1b48f58abea46a9b/6abd0d2d59183a0f934b9adf_Geist-500-Medium.woff2) format('woff2')}@font-face{font-family:'Geist Mono';font-weight:400;font-display:swap;src:url(https://cdn.prod.website-files.com/68a3440e1b48f58abea46a9b/6abd0aafb81b49be8f1b6e36_GeistMono-400-Regular.woff2) format('woff2')}@font-face{font-family:'Geist Mono';font-weight:500;font-display:swap;src:url(https://cdn.prod.website-files.com/68a3440e1b48f58abea46a9b/6abd0ae3a2c3f0b909a24b75_GeistMono-500-Medium.woff2) format('woff2')}:root{--ink:#0b0d12;--mute:#596071;--line:#dcdfe6;--g50:#f3f4f7;--b500:#005bf0;--b600:#0047bb;--paper:#fff;--sans:Geist,ui-sans-serif,system-ui,sans-serif;--mono:'Geist Mono',ui-monospace,Menlo,monospace}html,body{margin:0;padding:0;background:transparent;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}form.hs-form{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px;margin:0;padding:0;max-width:none;font-family:var(--sans)}form.hs-form>*{grid-column:1/-1;min-width:0;margin:0!important;float:none!important;width:auto!important}form.hs-form>.hs_firstname,form.hs-form>.hs_lastname{grid-column:auto}form.hs-form fieldset{max-width:none!important;margin:0;padding:0;border:0}form.hs-form .hs-form-field{display:grid;gap:7px}form.hs-form .hs-form-field>label{display:block;margin:0;padding:0;font-family:var(--mono);font-size:11px;line-height:1.4;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}form.hs-form .hs-form-required{display:none}form.hs-form .input{margin:0!important}form.hs-form input.hs-input:not([type=checkbox]),form.hs-form textarea.hs-input{display:block;width:100%!important;box-sizing:border-box;font:inherit;font-size:16px;line-height:1.5;color:var(--ink);background:var(--g50);border:1px solid var(--line);border-radius:0;padding:12px 14px;box-shadow:none;caret-color:var(--b500);-webkit-appearance:none;appearance:none;transition:border-color .2s,background-color .2s}form.hs-form textarea.hs-input{min-height:84px;resize:vertical}form.hs-form ::placeholder{color:#8b92a3;opacity:1}form.hs-form input.hs-input:not([type=checkbox]):focus,form.hs-form textarea.hs-input:focus{outline:0;border-color:var(--b500);background:var(--paper);box-shadow:0 0 0 2px var(--b500)}form.hs-form input.hs-input.error,form.hs-form textarea.hs-input.error,form.hs-form input.hs-input.invalid{border:1px dashed var(--ink);background:var(--g50)}form.hs-form ul.hs-error-msgs{list-style:none;margin:2px 0 0;padding:0}form.hs-form ul.hs-error-msgs label,form.hs-form .hs-error-msg{display:flex!important;align-items:center;gap:8px;margin:0;font-family:var(--mono);font-size:12px;line-height:1.4;font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink)}form.hs-form ul.hs-error-msgs label::before,form.hs-form .hs-error-msg::before{content:'';width:8px;height:8px;background:var(--b500);flex:none}form.hs-form .hs_error_rollup{display:none}form.hs-form .legal-consent-container{font-size:13px;line-height:1.5;color:var(--mute)}form.hs-form .legal-consent-container p{margin:0}form.hs-form .legal-consent-container ul.inputs-list{list-style:none;margin:0;padding:0}form.hs-form .legal-consent-container .hs-form-booleancheckbox-display{display:grid;grid-template-columns:18px 1fr;gap:12px;align-items:start;cursor:pointer;margin:0;font-family:var(--sans);font-size:13px;line-height:1.5;letter-spacing:0;text-transform:none;color:var(--mute)}form.hs-form .legal-consent-container .hs-form-booleancheckbox-display>span{margin:0!important;display:block}form.hs-form input[type=checkbox]{width:18px;height:18px;margin:2px 0 0;accent-color:var(--b500)}form.hs-form input[type=checkbox]:focus-visible{outline:2px solid var(--b500);outline-offset:2px}form.hs-form .hs_recaptcha{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden;margin:0}.grecaptcha-badge{visibility:hidden!important}.tf27-rc{grid-column:1/-1;margin:0;font-size:12px;line-height:1.5;color:var(--mute)}.tf27-rc a,.tf27-rc a:link,.tf27-rc a:visited{color:var(--mute)!important;text-underline-offset:2px}.tf27-rc a:hover,.tf27-rc a:focus{color:var(--b600)!important}form.hs-form{position:relative}form.hs-form .hs_submit .actions{margin:0;padding:0;position:relative}form.hs-form .hs_submit .actions::after{content:'';position:absolute;z-index:1;left:22px;top:50%;width:8px;height:8px;margin-top:-4px;background:var(--b500);pointer-events:none;transition:transform .25s cubic-bezier(.2,.7,.2,1),background-color .2s}form.hs-form .hs_submit .actions:hover::after{transform:rotate(90deg) scale(1.25);background:#fff}form.hs-form input.hs-button,form.hs-form input.hs-button.primary,form.hs-form input.hs-button.large{display:block!important;width:100%!important;min-height:52px!important;box-sizing:border-box!important;margin:0!important;padding:0 22px!important;border:0!important;border-radius:0!important;background:var(--ink)!important;background-image:none!important;color:#fff!important;font-family:var(--mono)!important;font-size:13px!important;line-height:1!important;font-weight:500!important;letter-spacing:.06em!important;text-transform:uppercase!important;text-shadow:none!important;box-shadow:none!important;cursor:pointer;transition:background-color .2s!important}form.hs-form input.hs-button:hover,form.hs-form input.hs-button:focus,form.hs-form input.hs-button:active{background:var(--b500)!important;color:#fff!important;border:0!important;box-shadow:none!important}form.hs-form input.hs-button:focus-visible{outline:2px solid var(--b500);outline-offset:2px}form.hs-form input.hs-button[disabled]{opacity:.7;cursor:not-allowed}.submitted-message{display:grid;gap:12px;margin:0;padding:8px 0;font-family:var(--sans);color:var(--ink)}.submitted-message p{margin:0}.done-sq{display:grid;grid-template-columns:repeat(3,14px);gap:4px;margin-bottom:8px}.done-sq i{width:14px;height:14px;background:var(--b500);animation:pop .4s calc(var(--i)*50ms) both cubic-bezier(.2,.7,.2,1)}@keyframes pop{from{transform:scale(0)}}.done-h{margin:0;font-size:30px;line-height:1.15;font-weight:400;letter-spacing:-.04em;color:var(--ink)}.done-p{margin:0;font-size:16px;line-height:1.55;color:var(--mute)}@media (max-width:400px){form.hs-form{grid-template-columns:minmax(0,1fr)}form.hs-form>.hs_firstname,form.hs-form>.hs_lastname{grid-column:1/-1}}@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}";
+  const sq = Array.from({length: 9}, (_, n) => '<i style="--i:' + n + '"></i>').join('');
+  const ok = '<span class="done-sq" aria-hidden="true">' + sq + '</span><h3 class="done-h">' + T.success_h + '</h3><p class="done-p">' + T.success_p + '</p>';
+  const reveal = () => host.classList.add('is-ready');
+  setTimeout(reveal, 5000);                          /* never leave the space empty */
+  function fit(ifr, d) { try { const h = d.documentElement.scrollHeight; if (h) ifr.style.height = h + 'px'; } catch (e) {} }
+  function dress(ifr) {
+    let d; try { d = ifr.contentDocument; } catch (e) { return; }
+    if (!d || !d.head) return;
+    if (!d.getElementById('tf27-css')) { const s = d.createElement('style'); s.id = 'tf27-css'; s.textContent = CSS; d.head.appendChild(s); }
+    const f = d.querySelector('form.hs-form');
+    if (f) {
+      Object.keys(T.labels).forEach(n => {
+        const fl = f.querySelector('.hs_' + n); if (!fl) return;
+        const l = fl.querySelector('label > span:first-child'); if (l && l.textContent !== T.labels[n]) l.textContent = T.labels[n];
+      });
+      const c = f.querySelector('.legal-consent-container .hs-form-booleancheckbox-display > span');
+      if (c && T.consent && c.textContent.trim() !== T.consent) c.textContent = T.consent;
+      const b = f.querySelector('input.hs-button'); if (b && b.value !== T.submit) b.value = T.submit;
+      /* the reCAPTCHA badge is hidden, so Google's required notice is shown as text under the button */
+      const sb = f.querySelector('.hs_submit');
+      if (sb && !f.querySelector('.tf27-rc')) sb.insertAdjacentHTML('afterend', '<p class="tf27-rc">' + T.recaptcha + '</p>');
+    }
+    fit(ifr, d);
+  }
+  function go() {
+    hbspt.forms.create({
+      portalId: '145896847', formId: 'eafb1d3a-e312-4029-a357-655e7db2f94f', region: 'eu1', target: '#hbspt-tf27-reg', locale: lang,
+      inlineMessage: ok,
+      translations: { [lang]: { submitText: T.submit, required: T.required, invalidEmail: T.email, invalidEmailFormat: T.email } },
+      onFormReady: () => {
+        const ifr = host.querySelector('iframe'); if (!ifr) return;
+        const run = () => dress(ifr);
+        run(); setTimeout(reveal, 120); setTimeout(run, 250); setTimeout(run, 800);
+        try {
+          const d = ifr.contentDocument;
+          new MutationObserver(run).observe(d.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+          new ResizeObserver(() => fit(ifr, d)).observe(d.body);
+        } catch (e) {}
+      },
+      onFormSubmitted: () => { try { window.dispatchEvent(new Event('hs-form-event:on-submission:success')); } catch (e) {} }
+    });
+  }
+  (function wait(n) {
+    if (window.hbspt && hbspt.forms) return go();
+    if (n === 30 && !document.querySelector('script[src*="hsforms.net/forms/embed/v2.js"]')) {
+      const s = document.createElement('script'); s.src = 'https://js-eu1.hsforms.net/forms/embed/v2.js'; document.head.appendChild(s);
+    }
+    setTimeout(() => wait(n + 1), 100);
+  })(0);
 })();
