@@ -155,7 +155,8 @@
     const kind = cv.dataset.grid, onLight = cv.dataset.theme === 'light';
     const hot = onLight ? ['#ccdfff','#94bdff','#e5f0ff','#005bf0','#5797ff'] : HOT;
     let W = 0, H = 0, cell = 64, cols = 0, rows = 0, dpr = 1, raf = 0, last = '', ox = 0, oy = 0;
-    const pn = kind === 'reg' ? cv.parentElement.querySelector('.panel-reg') : null;
+    const pn = kind === 'reg' ? cv.parentElement.querySelector('.panel-reg, .luma-reg') : null;
+    const pf = pn && pn.querySelector('iframe');
     const lit = new Map();   // "c,r" -> {t0, col}
     function size() {
       const r = cv.getBoundingClientRect();
@@ -167,13 +168,17 @@
       if (pn) snap();
       bounds(); draw(performance.now());
     }
-    /* registration: the form panel is snapped to whole squares and the grid is offset so its lines
+    /* registration: the form panel (or Luma iframe) is snapped to whole squares and the grid is offset so its lines
        run exactly along the panel's edges */
     function snap() {
-      pn.style.width = pn.style.minHeight = pn.style.marginLeft = '';
+      pn.style.width = pn.style.minHeight = pn.style.marginLeft = pn.style.flex = '';
+      if (pf) pf.style.height = '';
       const r0 = pn.getBoundingClientRect();
-      const w = Math.floor(r0.width / cell) * cell, h = Math.ceil(r0.height / cell) * cell;
-      pn.style.width = w + 'px'; pn.style.minHeight = h + 'px';
+      const w = Math.floor(r0.width / cell) * cell;
+      pn.style.width = w + 'px'; pn.style.flex = 'none';   /* flex-basis would override the width */
+      /* an iframe (Luma) keeps its CSS height band, rounded up to whole squares at the snapped width */
+      if (pf) pf.style.height = Math.ceil(pf.offsetHeight / cell) * cell + 'px';
+      pn.style.minHeight = Math.ceil(pn.getBoundingClientRect().height / cell) * cell + 'px';
       const frac = r0.left % 1; if (frac) pn.style.marginLeft = -frac + 'px';
       const c = cv.getBoundingClientRect(), r = pn.getBoundingClientRect();
       ox = ((r.left - c.left) % cell + cell) % cell; oy = ((r.top - c.top) % cell + cell) % cell;
