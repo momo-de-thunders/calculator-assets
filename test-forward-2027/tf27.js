@@ -277,13 +277,15 @@
       el.after(sr); el.setAttribute('aria-hidden', 'true');
     }
     el.dataset.busy = 1;
+    /* glyphs are not all as wide as the final text: hold the width so the line (and anything beside it) stays put */
+    el.style.display = 'inline-block'; el.style.width = el.getBoundingClientRect().width + 'px';
     const t0 = performance.now();
     (function step(now) {
       const p = Math.min(1, (now - t0) / dur), n = Math.floor(p * orig.length);
       let s = orig.slice(0, n);
       for (let i = n; i < orig.length; i++) s += orig[i] === ' ' ? ' ' : GL[(Math.random() * GL.length) | 0];
       el.textContent = s;
-      if (p < 1) requestAnimationFrame(step); else { el.textContent = orig; delete el.dataset.busy; }
+      if (p < 1) requestAnimationFrame(step); else { el.textContent = orig; el.style.display = el.style.width = ''; delete el.dataset.busy; }
     })(t0);
   }
 
