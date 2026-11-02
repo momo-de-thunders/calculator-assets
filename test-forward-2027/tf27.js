@@ -509,8 +509,20 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !mn.hidden) { setMenu(false); mb.focus(); } });
   addEventListener('resize', () => { if (innerWidth > 1024 && !mn.hidden) setMenu(false); });
 
+  /* in-page links: one native smooth scroll. On Webflow, webflow.js animates #links itself and fights the CSS
+     smooth scroll (a slow crawl, then a jump), so the click is handled here and stopped at the link */
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+    const id = decodeURIComponent(a.getAttribute('href').slice(1)), t = id && document.getElementById(id);
+    if (!t) return;
+    e.preventDefault(); e.stopPropagation();
+    if (!mn.hidden) setMenu(false);
+    t.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block: 'start' });
+    history.pushState(null, '', '#' + id);
+    if (a.classList.contains('skip')) { t.tabIndex = -1; t.focus({ preventScroll: true }); }
+  }));
+
   /* mobile sticky CTA */
-  const sticky = document.getElementById('sticky'), reg = document.getElementById('register');
+  const sticky = document.getElementById('sticky'), reg = document.getElementById('register') || document.getElementById('inscription');
   let pastHero = false, atReg = false;
   new IntersectionObserver(es => { pastHero = !es[0].isIntersecting && es[0].boundingClientRect.top < 0; upd(); })
     .observe(document.querySelector('.ctas'));
